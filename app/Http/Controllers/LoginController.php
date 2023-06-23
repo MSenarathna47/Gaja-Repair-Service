@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
@@ -12,21 +13,23 @@ class LoginController extends Controller
     {
         $usertype=Auth::user()->usertype;
 
+      
+
+
         if($usertype=='0')
         {
             return view('frontend.index');
         }
-        if($usertype=='1')
+         else if($usertype=='1')
         {
-
-            // return "admin";
-
             return view('backend.index');
-
         }
-        else
+        else if($usertype=='2')
         {
-            return view('');
+            return view('backend.managerr.index');
+        }
+        else{
+            
         }
     }
 }

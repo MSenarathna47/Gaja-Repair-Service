@@ -18,6 +18,11 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
 
+
+    public function branch(){
+    	return $this->belongsTo(Branch::class,'branch_id','id');
+    }
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -28,6 +33,7 @@ class User extends Authenticatable
         'email',
         'password',
     ];
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -50,6 +56,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+   
     /**
      * The accessors to append to the model's array form.
      *
@@ -58,4 +65,8 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+
+ 
+    
 }

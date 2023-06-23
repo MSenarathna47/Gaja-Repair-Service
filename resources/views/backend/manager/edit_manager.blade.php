@@ -4,6 +4,7 @@
     <div class="card">
         <form class="form-horizontal" method="POST" action="{{ route('update.managers') }}">
             @csrf
+            <input type="text" value="{{ $branchmanager->id }}" name="id" hidden>
             <div class="card-body">
                 <h4 class="card-title">Add Branch Managers</h4>
                 <div class="form-group row">

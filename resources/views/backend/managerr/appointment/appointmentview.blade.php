@@ -1,4 +1,4 @@
-@extends('backend.main_master')
+@extends('backend.managerr.main_master')
 @section('index')
 <div class="col-md-12">
     <div class="card">
@@ -88,22 +88,10 @@
 
 <div class="col-md-12">
     <div class="card">
-        <form class="form-horizontal" method="POST" action="{{ route('add.branchappointment')}}">
+        <form class="form-horizontal" method="POST" action="{{ route('send.mail')}}">
             @csrf
 
-                    <input  type="text" hidden name="id" value="{{$appointment->id}}">
-                    <input  type="text" class="form-control" hidden name="fullName" value="{{ $appointment->fullName }}" >
-                    <input  type="text" class="form-control" hidden name="phoneNumber" value="{{ $appointment->phoneNumber}}">
-                    <input  type="email" class="form-control"hidden name="email" value="{{ $appointment->email}}" >
-                    <input  type="text" class="form-control" hidden name="address" value="{{  $appointment->address }}">
-                    <input  type="text" class="form-control" hidden name="carModel" value="{{ $appointment->carModel}}">
-                    <input  type="text" class="form-control" hidden name="carYear" value="{{ $appointment->carYear}}">
-                    <input  type="text" class="form-control" hidden name="licensePlate" value="{{ $appointment->licensePlate}}">
-                    <input  type="text" class="form-control" hidden name="transmissiontype" value="{{ $appointment->transmissiontype}}">
-                    <input  type="text" class="form-control" hidden name="fuelfype" value="{{ $appointment->fuelfype}}">
-                    <input  type="text" class="form-control" hidden name="serviceSelection" value="{{ $appointment->serviceSelection}}">
-                    <input  type="text" class="form-control" hidden name="preferredDateTime" value="{{ $appointment->preferredDateTime}}">
-                    <textarea  class="form-control" hidden name="des"> {{  $appointment->discription }}</textarea>
+            <input  type="text" hidden value="{{$appointment->id}}" name="id">
 
             <div class="card-body">
                 <h4 class="card-title">conform Appointment</h4>
@@ -114,10 +102,8 @@
                         <div class="form-group row" data-select2-id="12">
                             <label class="col-md-3">Choose Branch</label>
                             <div class="col-md-9" data-select2-id="11">
-                                <select name="branch_id" class="select2 form-control custom-select select2-hidden-accessible" style="width: 100%; height:36px;" data-select2-id="1" tabindex="-1" aria-hidden="true">
-                                    @foreach ($branch  as $branch )
-                                    <option value="{{$branch->id}}">{{$branch->branch_name}}</option>
-                                    @endforeach
+                                <select class="select2 form-control custom-select select2-hidden-accessible" style="width: 100%; height:36px;" data-select2-id="1" tabindex="-1" aria-hidden="true">
+                                    <option data-select2-id="3">Select</option>
                                 </select>
                             </div>
                         </div>
@@ -127,7 +113,7 @@
 
             <div class="border-top">
                 <div class="card-body">
-                    <button class="btn btn-primary">Send To Branch</button>
+                    <button class="btn btn-primary">conform</button>
                 </div>
             </div>
         </form>

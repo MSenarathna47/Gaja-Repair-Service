@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Mail\SendMail;
 use App\Mail\SendMailAuto;
 use App\Models\Appointment;
+use App\Models\Branch;
+use App\Models\Branchappointment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class AppointmentController extends Controller
@@ -79,9 +82,10 @@ class AppointmentController extends Controller
 
         public function CheckAppointment($id)
         {
+            $branch = Branch::all();
             $appointment= Appointment::findorFail($id); //get specific id gata using findorfail function
 
-            return view('backend.appointment.appointment_check' , compact('appointment'));
+            return view('backend.appointment.appointment_check' , compact('appointment','branch'));
         }
 
         public function SendMail(Request $request)
@@ -110,6 +114,81 @@ class AppointmentController extends Controller
 
 
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   public function ViewBranchAppointment()
+   {
+
+
+        $a=Auth::user()->id;
+        $gg = DB::table('users')->where('id', $a)->value('branch_id');
+        $ss = DB::table('branches')->where('id', $gg)->value('branch_no');
+
+
+        // $aa= $request->branch_id;
+        // // $gg = DB::table('users')->where('id', $a)->value('branch_id');
+        // $ss = DB::table('branches')->where('id', $aa)->value('branch_no');
+
+        // if($ss == "BRN01")
+        // {
+        //     $dd = 
+        // }
+        // if($ss == "BRN02")
+        // {
+
+        // }else{
+
+        // }
+
+
+
+        // dd($ss);
+
+    
+    return view('backend.managerr.appointment.appointment');
+   }
+
+   public function StoreBranchAppointment(Request $request)
+   {
+    $appointment = new Branchappointment();
+    $appointment->fullName = $request->fullName;
+    $appointment->phoneNumber = $request->phoneNumber;
+    $appointment->branch_id=$request->branch_id;
+    $appointment->email = $request->email;
+    $appointment->status = "New";
+    $appointment->address = $request->address;
+    $appointment->carModel = $request->carModel;
+    $appointment->carYear = $request->carYear;
+    $appointment->licensePlate = $request->licensePlate;
+    $appointment->transmissiontype = $request->transmissiontype;
+    $appointment->fuelfype = $request->fuelfype;
+    $appointment->serviceSelection = $request->serviceSelection;
+    $appointment->preferredDateTime = $request->preferredDateTime;
+    $appointment->save();
+
+    Appointment::truncate();
+
+
+        return redirect()->route('view.branchappointment');
+
+   }
 
 
     
