@@ -1,4 +1,4 @@
-@extends('backend.main_master')
+@extends('backend.manager.main_master')
 @section('index')
 
 <div class="row">

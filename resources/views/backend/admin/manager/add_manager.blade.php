@@ -1,8 +1,8 @@
-@extends('backend.main_master')
+@extends('backend.admin.main_master')
 @section('index')
 <div class="col-md-12" data-select2-id="15">
     <div class="card">
-        <form class="form-horizontal" method="POST" action="{{ route('store.managers') }}">
+        <form class="form-horizontal" method="POST" action="{{ route('store.manager') }}">
             @csrf
             <div class="card-body">
                 <h4 class="card-title">Add Branch Managers</h4>

@@ -1,4 +1,4 @@
-@extends('backend.managerr.main_master')
+@extends('backend.manager.main_master')
 @section('index')
 <div class="col-md-12">
     <div class="card">
@@ -86,7 +86,7 @@
 
 </div>
 
-<div class="col-md-12">
+{{-- <div class="col-md-12">
     <div class="card">
         <form class="form-horizontal" method="POST" action="{{ route('send.mail')}}">
             @csrf
@@ -120,5 +120,5 @@
     </div>
 
 </div>
-           
+            --}}
 @endsection

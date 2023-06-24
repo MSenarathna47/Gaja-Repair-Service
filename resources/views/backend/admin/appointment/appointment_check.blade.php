@@ -1,4 +1,4 @@
-@extends('backend.main_master')
+@extends('backend.admin.main_master')
 @section('index')
 <div class="col-md-12">
     <div class="card">
@@ -88,7 +88,7 @@
 
 <div class="col-md-12">
     <div class="card">
-        <form class="form-horizontal" method="POST" action="{{ route('add.branchappointment')}}">
+        <form class="form-horizontal" method="POST" action="{{ route('request.appointment')}}">
             @csrf
 
                     <input  type="text" hidden name="id" value="{{$appointment->id}}">
@@ -127,7 +127,7 @@
 
             <div class="border-top">
                 <div class="card-body">
-                    <button class="btn btn-primary">Send To Branch</button>
+                    <button class="btn btn-primary">Send To Request</button>
                 </div>
             </div>
         </form>

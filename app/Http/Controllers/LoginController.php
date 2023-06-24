@@ -13,20 +13,18 @@ class LoginController extends Controller
     {
         $usertype=Auth::user()->usertype;
 
-      
-
-
+    
         if($usertype=='0')
         {
-            return view('frontend.index');
+            return redirect()->route('user.dashboard');
         }
          else if($usertype=='1')
         {
-            return view('backend.index');
+            return redirect()->route('admin.dashboard');
         }
         else if($usertype=='2')
         {
-            return view('backend.managerr.index');
+            return redirect()->route('manager.dashboard');
         }
         else{
             

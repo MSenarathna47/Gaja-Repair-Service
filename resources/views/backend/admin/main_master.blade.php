@@ -36,14 +36,14 @@
         <!-- ============================================================== -->
         <!-- Topbar header - style you can find in pages.scss -->
         <!-- ============================================================== -->
-        @include('backend.tools.header')
+        @include('backend.admin.tools.header')
         <!-- ============================================================== -->
         <!-- End Topbar header -->
         <!-- ============================================================== -->
         <!-- ============================================================== -->
         <!-- Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
-        @include('backend.tools.sidebar')
+        @include('backend.admin.tools.sidebar')
         <!-- ============================================================== -->
         <!-- End Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
@@ -57,7 +57,7 @@
              <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-12 d-flex no-block align-items-center">
-                        <h4 class="page-title">Dashboard</h4>
+                        {{-- <h4 class="page-title">Dashboard</h4>
                         <div class="ml-auto text-right">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
@@ -65,7 +65,7 @@
                                     <li class="breadcrumb-item active" aria-current="page">Library</li>
                                 </ol>
                             </nav>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>

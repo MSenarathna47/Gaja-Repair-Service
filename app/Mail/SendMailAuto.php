@@ -31,7 +31,7 @@ class SendMailAuto extends Mailable
     public function build()
     {
         $appointment = $this->data;
-        return $this->from('support@gajaservice.com')->view('backend.mail.mail_auto',compact('appointment'))
+        return $this->from('support@gajaservice.com')->view('backend.admin.mail.mail_auto',compact('appointment'))
         ->subject('Email From GAJA Service and Repair Center');
     }
 }

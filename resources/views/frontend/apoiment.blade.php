@@ -36,7 +36,7 @@
 
 
 
-                <form method="post"  action="{{route('store-appointment')}}">
+                <form method="post"  action="{{route('make.appointment')}}">
                     @csrf
                     {{-- <div class="form-group">
                         <label ></label>

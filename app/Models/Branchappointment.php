@@ -14,5 +14,9 @@ class Branchappointment extends Model
     public function branch(){
     	return $this->belongsTo(Branch::class,'branch_id','id');
     }
+
+    public function Manager(){
+    	return $this->belongsTo(User::class,'Manager_id','id');
+    }
     
 }

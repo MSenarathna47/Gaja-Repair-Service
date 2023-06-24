@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('preferredDateTime')->nullable();
             $table->text('discription')->nullable();
             $table->string('branch_id')->nullable();
+            $table->string('manager_id')->nullable();
             $table->timestamps();
         });
     }

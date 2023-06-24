@@ -12,20 +12,18 @@ use Illuminate\Support\Facades\DB;
 
 class BranchController extends Controller
 {
-    public function View()
+    public function ViewBranch()
     {
-        
-
         $branch = Branch::all();
-        return view('backend.branch.branch_view', compact('branch'));
+        return view('backend.admin.branch.branch_view', compact('branch'));
     }
 
     public function AddBranch()
     {
-        return view('backend.branch.branch_add');
+        return view('backend.admin.branch.branch_add');
     }
 
-    public function Store(Request $request)
+    public function StoreBranch(Request $request)
     {
 
         $branch = new Branch();   
@@ -38,7 +36,6 @@ class BranchController extends Controller
         return redirect()->route('view.branch');
     }
 
-
     public function DeleteBranch($id)
     { 
     
@@ -46,18 +43,15 @@ class BranchController extends Controller
         return redirect()->back();
     }
 
-
     public function EditBranch($id)
     {
       $branch = Branch::findOrFail($id);
-      return view('backend.branch.branch_edit',compact('branch'));
+      return view('backend.admin.branch.branch_edit',compact('branch'));
 
     }
 
-    
     public function UpdateBranch(Request $request)
     {
-        // dd($request);
         $branchid=$request->id;
         Branch::findOrFail($branchid)->update([
 

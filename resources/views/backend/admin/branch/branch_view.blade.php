@@ -1,8 +1,8 @@
-@extends('backend.main_master')
+@extends('backend.admin.main_master')
 @section('index')
 <div class="card">
     <div class="card-body">
-        <h5 class="card-title">Basic Datatable</h5>
+        <h5 class="card-title">View Branch </h5>
         <div class="table-responsive">
             <table id="zero_config" class="table table-striped table-bordered">
                 <thead>

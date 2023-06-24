@@ -11,24 +11,20 @@ use Illuminate\Support\Facades\Hash;
 
 class ManagerController extends Controller
 {
-    public function View()
+    public function ViewManager()
     {
         $managers = User::where('usertype', 2)->get();
-        return view('backend.manager.view_managers', compact('managers'));
+        return view('backend.admin.manager.view_managers', compact('managers'));
     }
 
     public function AddManager()
     {
         $branch = Branch::all();
-        return view('backend.manager.add_manager',compact('branch'));
-        // $managers = BranchManager::all();
-        // return view('backend.branch.view_manager', compact('managers'));
+        return view('backend.admin.manager.add_manager',compact('branch'));
+        
     }
     public function Store(Request $request)
     {
-
-        // dd($request);
-        // Validate the form data
         $validatedData = $request->validate([
             'name' => 'required',
             'email' => 'required|email',
@@ -36,7 +32,6 @@ class ManagerController extends Controller
 
 
         $Branchmanager = new User();   
-
         $Branchmanager->usertype = 2;
         $Branchmanager->branch_id=$request->branch_id;
         $Branchmanager->name = $request->name;
@@ -47,31 +42,28 @@ class ManagerController extends Controller
         $Branchmanager->save();
 
         return redirect()->route('view.manager');
-
-        
- 
     }
 
 
     public function DeleteManager($id)
-        {
-            User::findOrFail($id)->delete();
-            return redirect()->back();
-        }
+    {
+        User::findOrFail($id)->delete();
+        return redirect()->back();
+    }
 
 
-        public function EditManager($id)
-        {
-          $branchmanager =   User::findOrFail($id);
-          return view('backend.manager.edit_manager',compact('branchmanager'));
+    public function EditManager($id)
+    {
+        $branch = Branch::all();
+        $branchmanager =   User::findOrFail($id);
+        return view('backend.admin.manager.edit_manager',compact('branchmanager','branch'));
 
-        }
+    }
 
         
 
     public function UpdateManager(Request $request)
     {
-        // dd($request);
         $branchid=$request->id;
         User::findOrFail($branchid)->update([
 
@@ -80,13 +72,8 @@ class ManagerController extends Controller
             'address' => $request->address,
             'email' =>$request->email,
             'password' => Hash::make($request->password),
-
-
         ]);         
         return redirect()->route('view.manager');
-
-        
-
     }
    
        

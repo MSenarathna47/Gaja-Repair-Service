@@ -5,6 +5,7 @@ use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\BranchController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ManagerController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 
@@ -23,15 +24,18 @@ use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 Route::get('/', function () {
     return view('frontend.index');
 });
-
-
-Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('backend.index');
-    })->name('dashboard');
-});
-
+Route::get('/user/dashboard',[HomeController::class,'ViewFrontend'])->name('user.dashboard');
+Route::get('/admin/dashboard',[HomeController::class,'ViewAdminDashboard'])->name('admin.dashboard');
+Route::get('/manager/dashboard',[HomeController::class,'ViewManagerDashboard'])->name('manager.dashboard');
+Route::get('/logout',[AuthenticatedSessionController::class,'destroy'])->name('admin.logout');
 Route::get('/redirect', [App\Http\Controllers\LoginController::class, 'Login'])->name('redirect');
+
+
+// Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])->group(function () {
+//     Route::get('/dashboard', function () {
+//         return view('backend.index');
+//     })->name('dashboard');
+// });
 
 
 // Frontend route
@@ -44,44 +48,66 @@ Route::get('/features', [FrontendController::class , 'Viewfeatures'])->name('fea
 Route::get('/apoiment', [FrontendController::class , 'Viewapoiment'])->name('apoiment');
 Route::get('/our_team', [FrontendController::class , 'Viewour_team'])->name('our_team');
 
+//    all admin routes
+
+Route::prefix('admin')->group(function(){
+
+    Route::controller(AppointmentController::class)->group(function (){
+
+        Route::post('make/appointment','MakeAppointment')->name('make.appointment'); 
+        Route::get('/view/appointment','ViewAppointment')->name('admin.view.appointment');
+        Route::get('/check/appointment{id}','CheckAppointment')->name('admin.check.appointment');
+        Route::get('/delete/appointment{id}','AppointmentDelete')->name('admin.delete.appointment');
+        Route::post('/request/appointment','RequestAppointment')->name('request.appointment');
+        Route::get('/view/request/appointment','ViewRequestAppointment')->name('view.request.appointment');
+
+        // Route::POST('/sendmail',[AppointmentController::class,'SendMail')->name('send.mail');
+
+
+    });
+    Route::controller(ManagerController::class)->group(function (){
+
+        Route::get('/view/manager','ViewManager')->name('view.manager');
+        Route::get('/add/manager','AddManager')->name('add.manager');
+        Route::post('store/manager','Store')->name('store.manager');
+        Route::get('/edit/manager{id}','EditManager')->name('edit.manager');
+        Route::get('/delete/manager/{id}','DeleteManager')->name('delete.manager');
+        Route::post('/update/manager','UpdateManager')->name('update.manager');
+        
+    });
+    
+    Route::controller(BranchController::class)->group(function (){
+
+        Route::get('view/branch','ViewBranch')->name('view.branch');
+        Route::get('/add/branch','AddBranch')->name('add.branch');
+        Route::post('/store/branch','StoreBranch')->name('store.branch');
+        Route::get('/edit/branch{id}','EditBranch')->name('edit.branch');
+        Route::get('/delete/branch/{id}','DeleteBranch')->name('delete.branch');
+        Route::post('/update/branch','UpdateBranch')->name('update.branch');
+        
+    });
+});
 
 
 
-// admin route
+Route::prefix('manager')->group(function(){
 
-Route::get('/admin/logout',[AuthenticatedSessionController::class,'destroy'])->name('admin.logout');
-Route::post('/store/appointment',[AppointmentController::class,'StoreAppointment'])->name('store-appointment');
-Route::get('/view/appointment',[AppointmentController::class,'ViewAppointment'])->name('view.appointment');
-Route::get('appointmen/delete/{id}',[AppointmentController::class,'AppointmentDelete'])->name('appointment.delete');
-Route::get('/check/appointment{id}',[AppointmentController::class,'CheckAppointment'])->name('check.appointment');
+    Route::controller(AppointmentController::class)->group(function (){
 
-Route::POST('/sendmail',[AppointmentController::class,'SendMail'])->name('send.mail');
+        Route::get('/view/appointment','ManagerViewAppointment')->name('manager.view.appointment');
+        Route::get('/check/appointment{id}','ManagerCheckAppointment')->name('manager.check.appointment');
 
 
-
-Route::get('/view',[ManagerController::class,'View'])->name('view.manager');
-Route::get('/add/manager',[ManagerController::class,'AddManager'])->name('add.manager');
-Route::post('manager/store',[ManagerController::class,'Store'])->name('store.managers');
-
-Route::get('/edit/manager{id}',[ManagerController::class,'EditManager'])->name('edit.managers');
-Route::get('/delete/{id}',[ManagerController::class,'DeleteManager'])->name('delete.managers');
-Route::post('manager/update',[ManagerController::class,'UpdateManager'])->name('update.managers');
-
-
-
-Route::get('branch/view',[BranchController::class,'View'])->name('view.branch');
-Route::get('/add/branch',[BranchController::class,'AddBranch'])->name('add.branch');
-Route::post('/store',[BranchController::class,'Store'])->name('store.branch');
-
-Route::get('/edit/brach{id}',[BranchController::class,'EditBranch'])->name('edit.branch');
-Route::get('brach/delete/{id}',[BranchController::class,'DeleteBranch'])->name('delete.branch');
-Route::post('branch/update',[BranchController ::class,'UpdateBranch'])->name('update.branch');
+    });
+});
 
 
 
 
-Route::get('/view/branch/appointment',[AppointmentController::class,'ViewBranchAppointment'])->name('view.branchappointment');
-Route::post('/add/brach/appointment',[AppointmentController::class,'StoreBranchAppointment'])->name('add.branchappointment');
+
+
+
+
 
 
 
