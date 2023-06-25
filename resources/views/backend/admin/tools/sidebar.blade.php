@@ -9,7 +9,8 @@
                     <ul aria-expanded="false" class="collapse first-level">
                         <li class="sidebar-item"><a href="{{ route('admin.view.appointment') }}" class="sidebar-link"><i class="mdi mdi-note-outline"></i><span class="hide-menu">New Appointments</span></a></li>
                         <li class="sidebar-item"><a href="{{ route('view.request.appointment') }}" class="sidebar-link"><i class="mdi mdi-note-plus"></i><span class="hide-menu">Requested Appointment</span></a></li>
-                        <li class="sidebar-item"><a href="" class="sidebar-link"><i class="mdi mdi-note-plus"></i><span class="hide-menu">Approved Appointment</span></a></li>
+                        <li class="sidebar-item"><a href="{{ route('view.approved.appointment') }}" class="sidebar-link"><i class="mdi mdi-note-plus"></i><span class="hide-menu">Approved Appointment</span></a></li>
+                        <li class="sidebar-item"><a href="{{ route('view.mailed.appointment') }}" class="sidebar-link"><i class="mdi mdi-note-plus"></i><span class="hide-menu">Mailed Appointment</span></a></li>
                     </ul>
                 </li>
                 <li class="sidebar-item "> <a class="sidebar-link has-arrow waves-effect waves-dark active" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-receipt"></i><span class="hide-menu">Manage Managers</span></a>

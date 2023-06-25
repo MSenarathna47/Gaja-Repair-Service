@@ -24,42 +24,31 @@
                 <h1 class="display-6 mb-4"></h1>
             </div>
             <div class="row g-6 justify-content-center">
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="courses-item d-flex flex-column bg-light overflow-hidden h-100">
+
+                @foreach ($branch as $branch )
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;">
+                    <div class="courses-item d-flex flex-column bg-white overflow-hidden h-100">
                         <div class="text-center p-4 pt-0">
-                            <h5 class="mb-3">Anuradhapura</h5>
-                            <p></p>
+                            <div class="d-inline-block bg-primary text-white fs-5 py-1 px-4 mb-4">ONE</div>
+                            <h5 class="mb-3">{{ $branch->branch_name }}</h5>
+                            <p>Our aim is to provide the best service to our customer with the modern facilites of our company </p>
+                           <ol class="breadcrumb justify-content-center mb-0">
+                                <li class="breadcrumb-item small"><i class="fa fa-phone text-primary me-2"></i>{{ $branch->telephone }}</li>
+                                <li class="breadcrumb-item small"><i class="fas fa-city text-primary me-2"></i>{{ $branch->city }}</li>
+                            </ol> 
+                        </div>
+                        <div class="position-relative mt-auto">
+                            <img class="img-fluid" src="http://127.0.0.1:8000/img/teck 4.jpg" alt="">
+                            <div class="courses-overlay">
+                                <a class="btn btn-outline-primary border-2" href="">Read More</a>                            </div>
                         </div>
 
-                        <div class="position-relative mt-auto">
-                            <img class="img-fluid" src="img/courses-1.jpg" alt="">
-                           
-                        </div>
                     </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="courses-item d-flex flex-column bg-light overflow-hidden h-100">
-                        <div class="text-center p-4 pt-0">
-                            <h5 class="mb-3">Mihinthale</h5>
-                            <p></p>
-                          
-                        </div>
-                        <div class="position-relative mt-auto">
-                            <img class="img-fluid" src="img/courses-2.jpg" alt="">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="courses-item d-flex flex-column bg-light overflow-hidden h-100">
-                        <div class="text-center p-4 pt-0">
-                            <h5 class="mb-3">Madawachchiya</h5>
-                            <p></p>
-                        </div>
-                        <div class="position-relative mt-auto">
-                            <img class="img-fluid" src="img/courses-3.jpg" alt="">
-                        </div>
-                    </div>
-                </div>
+                </div>       
+                @endforeach
+             
+
+                
             </div>
         </div>
     </div>

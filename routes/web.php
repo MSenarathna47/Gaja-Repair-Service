@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ManagerController;
+use App\Http\Controllers\ReviewController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 
 
@@ -47,6 +48,9 @@ Route::get('/contact', [FrontendController::class , 'ViewContact'])->name('conta
 Route::get('/features', [FrontendController::class , 'Viewfeatures'])->name('features');
 Route::get('/apoiment', [FrontendController::class , 'Viewapoiment'])->name('apoiment');
 Route::get('/our_team', [FrontendController::class , 'Viewour_team'])->name('our_team');
+Route::get('/review', [FrontendController::class , 'Review'])->name('review');
+
+
 
 //    all admin routes
 
@@ -60,8 +64,9 @@ Route::prefix('admin')->group(function(){
         Route::get('/delete/appointment{id}','AppointmentDelete')->name('admin.delete.appointment');
         Route::post('/request/appointment','RequestAppointment')->name('request.appointment');
         Route::get('/view/request/appointment','ViewRequestAppointment')->name('view.request.appointment');
-
-        // Route::POST('/sendmail',[AppointmentController::class,'SendMail')->name('send.mail');
+        Route::get('/view/approved/appointment','ViewApprovedAppointment')->name('view.approved.appointment');
+        Route::get('/view/mailed/appointment','ViewMailedAppointment')->name('view.mailed.appointment');
+        Route::get('/sendmail/{id}','SendMail')->name('send.mail');
 
 
     });
@@ -96,10 +101,24 @@ Route::prefix('manager')->group(function(){
 
         Route::get('/view/appointment','ManagerViewAppointment')->name('manager.view.appointment');
         Route::get('/check/appointment{id}','ManagerCheckAppointment')->name('manager.check.appointment');
-
+        Route::post('/corform/appointment','CorformAppointment')->name('corform.appointment');
 
     });
 });
+
+
+
+    Route::controller(ReviewController::class)->group(function (){
+
+        Route::post('/add/review','AddReview')->name('add.review');
+        // Route::get('/check/appointment{id}','ManagerCheckAppointment')->name('manager.check.appointment');
+        // Route::post('/corform/appointment','CorformAppointment')->name('corform.appointment');
+
+    });
+
+
+
+
 
 
 

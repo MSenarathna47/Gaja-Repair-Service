@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Branch;
+use App\Models\Review;
 use Illuminate\Http\Request;
 
 class FrontendController extends Controller
@@ -16,8 +18,9 @@ class FrontendController extends Controller
         return view('frontend.about');
     }
     public function ViewBranch(){
-        
-        return view('frontend.branch');
+    
+        $branch = Branch::get();
+        return view('frontend.branch',compact('branch'));
     } 
     public function ViewContact(){
         
@@ -36,6 +39,13 @@ class FrontendController extends Controller
         
         return view('frontend.our_team');
     }
+    public function Review(){
+        
+        $review = Review::limit(3)->get();
 
+        // $name = User::
+        // dd($review);
+        return view('frontend.review',compact('review'));
+    }
 
 }

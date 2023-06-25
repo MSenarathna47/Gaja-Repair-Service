@@ -80,36 +80,16 @@
                             <textarea disabled class="form-control"> {{  $appointment->discription }}</textarea>
                         </div>
                     </div>
-            
-        
     </div>
 
 </div>
 
-{{-- <div class="col-md-12">
+<div class="col-md-12">
     <div class="card">
-        <form class="form-horizontal" method="POST" action="{{ route('send.mail')}}">
+        <form class="form-horizontal" method="POST" action="{{ route('corform.appointment')}}">
             @csrf
 
             <input  type="text" hidden value="{{$appointment->id}}" name="id">
-
-            <div class="card-body">
-                <h4 class="card-title">conform Appointment</h4>
-                <br>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group row" data-select2-id="12">
-                            <label class="col-md-3">Choose Branch</label>
-                            <div class="col-md-9" data-select2-id="11">
-                                <select class="select2 form-control custom-select select2-hidden-accessible" style="width: 100%; height:36px;" data-select2-id="1" tabindex="-1" aria-hidden="true">
-                                    <option data-select2-id="3">Select</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <div class="border-top">
                 <div class="card-body">
@@ -120,5 +100,5 @@
     </div>
 
 </div>
-            --}}
+           
 @endsection

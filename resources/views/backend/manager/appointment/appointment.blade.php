@@ -28,8 +28,8 @@
                           <td>{{ $data->serviceSelection}}</td>
                           <td>{{ $data->preferredDateTime}}</td>
                           <td>
-                            <a href="{{ route('manager.check.appointment',$appointment->id) }}" type="button" class="btn btn-primary btn-sm"><i class="fa fa-eye" ></i></a>
-                            <a href="{{ route('appointment.delete',$appointment->id)}}" type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
+                            <a href="{{ route('manager.check.appointment',$data->id) }}" type="button" class="btn btn-primary btn-sm"><i class="fa fa-eye" ></i></a>
+                            {{-- <a href="{{ route('appointment.delete',$data->id)}}" type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a> --}}
 
                           </td>
                         </tr>

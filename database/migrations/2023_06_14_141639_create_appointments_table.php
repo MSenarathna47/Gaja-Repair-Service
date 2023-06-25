@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('fuelfype')->nullable();
             $table->string('serviceSelection')->nullable();
             $table->string('preferredDateTime')->nullable();
+            $table->string('time')->nullable();
             $table->text('discription')->nullable();
             $table->timestamps();
         });

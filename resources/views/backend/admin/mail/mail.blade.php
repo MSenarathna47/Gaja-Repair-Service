@@ -61,7 +61,7 @@ width: 100% !important;
 Dear  {{ $appointment['fullName'] }}<br>
 
 Your appointment request has been approved! Visit us at GAJA Service and Repair Center on 
-{{ $appointment['fullName'] }} at {{ $appointment['fullName'] }}. If unable to attend, please notify us in advance. 
+{{ $appointment['preferredDateTime'] }} at {{ $appointment['time'] }}. If unable to attend, please notify us in advance. 
 Contact 077-XXXXXXX or Www.support@gajaservice.com for any inquiries. Thank you for choosing GAJA service and Repair Center. 
 We look forward to serving you soon! 
 

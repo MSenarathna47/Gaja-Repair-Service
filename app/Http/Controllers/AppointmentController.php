@@ -12,19 +12,27 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use LDAP\Result;
 
 class AppointmentController extends Controller
 {
     public function MakeAppointment(Request $request)
     {
+        // dd($request);
+        // $item->date= date('Y-m-d H:i:s', strtotime($request->date));
+
         if (Auth::user()) {
         // Validate the form data
+        
         $validatedData = $request->validate([
             'fullName' => 'required',
             'phone' => 'required',
             'email' => 'required|email',
         ]);
+        
         $appointment = new Appointment();
+        
+        $appointment->time = $request->time;
         $appointment->fullName = $request->fullName;
         $appointment->phoneNumber = $request->phone;
         $appointment->email = $request->email;
@@ -41,6 +49,7 @@ class AppointmentController extends Controller
         // Start Send Email
             $data = [
                 'fullName' => $request->fullName,
+                'time' => $request->time,
             ];
             Mail::to($request->email)->send(new SendMailAuto($data));
         // Stop Send Email
@@ -74,35 +83,39 @@ class AppointmentController extends Controller
     {
         $bid = $request->branch_id;
 
-        $userid = DB::table('users')->where('id',$bid)->value('branch_id');
+        $user = User::where('branch_id',$bid)->orderBy('id','DESC')->get();
+        foreach ($user as $user) {
+            $manager_id = $user->id;
+            // Use the $id as needed
+        }
 
-        // dd($bid);
+        $appointment = new Branchappointment();
+        $appointment->fullName = $request->fullName;
+        $appointment->phoneNumber = $request->phoneNumber;
+        $appointment->branch_id=$request->branch_id;
+        $appointment->email = $request->email;
+        $appointment->manager_id =$manager_id;
+        $appointment->status = "Pending";
+        $appointment->address = $request->address;
+        $appointment->time = $request->time;
 
-        // $appointment = new Branchappointment();
-        // $appointment->fullName = $request->fullName;
-        // $appointment->phoneNumber = $request->phoneNumber;
-        // $appointment->branch_id=$request->branch_id;
-        // $appointment->email = $request->email;
-        // $appointment->manager_id =$userid;
-        // $appointment->status = "Pending";
-        // $appointment->address = $request->address;
-        // $appointment->carModel = $request->carModel;
-        // $appointment->carYear = $request->carYear;
-        // $appointment->licensePlate = $request->licensePlate;
-        // $appointment->transmissiontype = $request->transmissiontype;
-        // $appointment->fuelfype = $request->fuelfype;
-        // $appointment->serviceSelection = $request->serviceSelection;
-        // $appointment->preferredDateTime = $request->preferredDateTime;
-        // $appointment->save();
+        $appointment->carModel = $request->carModel;
+        $appointment->carYear = $request->carYear;
+        $appointment->licensePlate = $request->licensePlate;
+        $appointment->transmissiontype = $request->transmissiontype;
+        $appointment->fuelfype = $request->fuelfype;
+        $appointment->serviceSelection = $request->serviceSelection;
+        $appointment->preferredDateTime = $request->preferredDateTime;
+        $appointment->save();
     
         // Appointment::truncate();
 
-        // return redirect()->route('admin.view.appointment');
+        return redirect()->route('admin.view.appointment');
  
     }
     public function ViewRequestAppointment()
     {
-        $requestedappointment = Branchappointment::all();
+        $requestedappointment = Branchappointment::where('status','Pending')->orderBy('id','DESC')->get();
         return view('backend.admin.appointment.requested_appointment', compact('requestedappointment'));
     }
 
@@ -113,60 +126,69 @@ class AppointmentController extends Controller
     public function ManagerViewAppointment()
     {
 
-            $data  = Branchappointment::where('manager_id', Auth::user()->id)->get();
+            $data  = Branchappointment::where('manager_id', Auth::user()->id)->where('status','Pending')->orderBy('id','DESC')->get();
             return view('backend.manager.appointment.appointment',compact( 'data'));
     }
 
     public function ManagerCheckAppointment($id)
     {
-        $appointment= Appointment::findorFail($id); //get specific id gata using findorfail function
-        return view('backend.manager.appointment.appointment_check' , compact('appointment'));
+        $appointment= Branchappointment::findorFail($id); //get specific id gata using findorfail function
+        return view('backend.manager.appointment.appointmentview' , compact('appointment'));
+    }
+    
+    public function CorformAppointment(Request $request)
+    {
+        $id = $request->id;
+        Branchappointment::findOrFail($id)->update([
+
+            'status'=> 'approved',
+            
+        ]);         
+
+        return redirect()->route('manager.view.appointment');
+
+
+    }
+
+    public function ViewApprovedAppointment()
+    {
+        $approvedappointment = Branchappointment::where('status','approved')->orderBy('id','DESC')->get();
+        return view('backend.admin.appointment.approved_appointment', compact('approvedappointment'));
     }
 
 
+    public function ViewMailedAppointment()
+    {
+        $mailedappointment = Branchappointment::where('status','Mail Send')->orderBy('id','DESC')->get();
+        return view('backend.admin.appointment.mailed_appointment', compact('mailedappointment'));
+    }
 
-    
+    public function SendMail(Request $request)
+    {
+        $id = $request->id;
+        // $invoice = Order::findOrFail($order_id);
+        $appointment = Branchappointment::findOrFail($id);
+        // dd($appointment);
 
-     
+        $data = [
+            'fullName' => $appointment->fullName,
+            'preferredDateTime' => $appointment->preferredDateTime,
+            'time' => $appointment->time,
+            // 'phoneNumber' => $appointment->phoneNumber,
+            // 'email' => $appointment->email,
+            // 'phoneNumber' => $appointment->phoneNumber,
+            // 'phoneNumber' => $appointment->phoneNumber,
+        ];
 
+        Branchappointment::findOrFail($id)->update([
 
+            'status'=> 'Mail Send',
+            
+        ]);     
 
-
-
-
-
-
-
-
-
-
-
-        // public function SendMail(Request $request)
-        // {
-        //     // dd($request);
-        //     $id = $request->id;
-
-        //         // Start Send Email
-        //             // $invoice = Order::findOrFail($order_id);
-        //             $appointment = Appointment::findOrFail($id);
-
-        //             $data = [
-        //                 'fullName' => $appointment->fullName,
-        //                 'preferredDateTime' => $appointment->preferredDateTime,
-        //                 // 'phoneNumber' => $appointment->phoneNumber,
-        //                 // 'email' => $appointment->email,
-        //                 // 'phoneNumber' => $appointment->phoneNumber,
-        //                 // 'phoneNumber' => $appointment->phoneNumber,
-
-
-        //             ];
-
-        //             Mail::to($appointment->email)->send(new SendMail($data));
-
-        //             return redirect()->route('view.appointment');
-
-
-        // }
+        Mail::to($appointment->email)->send(new SendMail($data));
+        return redirect()->route('admin.view.appointment');    
+    }
 
 
 

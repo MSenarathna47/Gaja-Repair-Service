@@ -31,7 +31,7 @@ class SendMail extends Mailable
     public function build()
     {
         $appointment = $this->data;
-        return $this->from('support@gajaservice.com')->view('backend.mail.mail',compact('appointment'))
+        return $this->from('support@gajaservice.com')->view('backend.admin.mail.mail',compact('appointment'))
         ->subject('Email From GAJA Service and Repair Center');
     }
 }

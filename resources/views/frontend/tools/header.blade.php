@@ -43,6 +43,8 @@
                 <a href="{{route('home')}}" class="nav-item nav-link active">Home</a>
                 <a href="{{route('about')}}" class="nav-item nav-link">About</a>
                 <a href=" {{route('branch')}} " class="nav-item nav-link">Branch</a>
+                <a href=" {{route('review')}} " class="nav-item nav-link">Reviews</a>
+
 
                 @if (Auth::check())
                      <form action="{{ route('logout') }}" method="POST" >
